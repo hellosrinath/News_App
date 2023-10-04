@@ -11,8 +11,8 @@ import retrofit2.Response
 class NewsRepositoryImpl(
     private val newsRemoteDataSource: NewsRemoteDataSource
 ) : NewsRepository {
-    override suspend fun getNewsHeadLines(): Resource<ApiResponse> {
-        return responseToResource(newsRemoteDataSource.getTopHeadLines())
+    override suspend fun getNewsHeadLines(country: String, page: Int): Resource<ApiResponse> {
+        return responseToResource(newsRemoteDataSource.getTopHeadLines(country,page))
     }
 
     private fun responseToResource(response: Response<ApiResponse>): Resource<ApiResponse> {
