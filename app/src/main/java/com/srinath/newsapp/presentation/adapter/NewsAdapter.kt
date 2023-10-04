@@ -54,7 +54,19 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
                 .load(article.urlToImage)
                 .placeholder(R.drawable.baseline_live_tv_24)
                 .into(binding.ivArticleImage)
+
+            binding.root.setOnClickListener {
+                onItemClickListener?.let {
+                    it(article)
+                }
+            }
         }
+    }
+
+    // item click
+    private var onItemClickListener: ((Article) -> Unit)? = null
+    fun setOnItemClickListener(listener: (Article) -> Unit) {
+        onItemClickListener = listener
     }
 
 }
