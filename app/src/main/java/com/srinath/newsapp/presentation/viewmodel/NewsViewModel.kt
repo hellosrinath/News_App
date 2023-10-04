@@ -6,6 +6,7 @@ import android.content.Context.CONNECTIVITY_SERVICE
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.transition.ArcMotion
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -29,6 +30,7 @@ class NewsViewModel(
     private val savedNewsUseCase: SaveNewsUseCase
 ) : AndroidViewModel(app) {
 
+    var selectedArticle: Article?=null
     val newsHeadLines: MutableLiveData<Resource<ApiResponse>> = MutableLiveData()
 
     @RequiresApi(Build.VERSION_CODES.P)
@@ -88,5 +90,6 @@ class NewsViewModel(
     fun saveNews(article: Article)= viewModelScope.launch(Dispatchers.IO) {
         savedNewsUseCase.execute(article)
     }
+
 
 }

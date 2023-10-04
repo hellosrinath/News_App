@@ -4,16 +4,16 @@ import com.srinath.newsapp.data.model.ApiResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
-
+//https://gitlab.com/srinath.cox/my-file/-/raw/master/news.json
 interface NewsApiService {
-    @GET("v2/top-headlines")
+    @GET(/*"v2/top-headlines"*/"my-file/-/raw/master/news.json")
     suspend fun getTopHeadLines(
         @Query("country")
         country: String,
         @Query("page")
         page: Int,
         @Query("apiKey")
-        apiKey: String = "f18f276bf5e84ec587ac49e4bae7d3b9"
+        apiKey: String = "4bf238712d1c4195b1a078788ecc0a77"
     ): Response<ApiResponse>
 
     @GET("v2/top-headlines")
@@ -25,6 +25,6 @@ interface NewsApiService {
         @Query("page")
         page: Int,
         @Query("apiKey")
-        apiKey: String = "f18f276bf5e84ec587ac49e4bae7d3b9"
+        apiKey: String = "4bf238712d1c4195b1a078788ecc0a77"
     ): Response<ApiResponse>
 }

@@ -28,8 +28,8 @@
         android:name="com.srinath.newsapp.InfoFragment"
         android:label="fragment_info"
         tools:layout="@layout/fragment_info">
-        <argument
+      <!--  <argument
             android:name="selected_article"
-            app:argType="com.srinath.newsapp.data.model.Article" />
+            app:argType="com.srinath.newsapp.data.model.Article" />-->
     </fragment>
 </navigation>

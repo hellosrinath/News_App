@@ -19,18 +19,20 @@ class InfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fragmentInfoBinding = FragmentInfoBinding.bind(view)
-        val args: InfoFragmentArgs by navArgs()
-        val article = args.selectedArticle
+//        val args: InfoFragmentArgs by navArgs()
+//        val article = args.selectedArticle
+
         viewModel = (activity as MainActivity).viewModel
+        val article = viewModel.selectedArticle
         fragmentInfoBinding.webView.apply {
             webViewClient = WebViewClient()
-            if (article.url != "")
-                article.url?.let { loadUrl(it) }
+            if (article?.url != "")
+                article?.url?.let { loadUrl(it) }
         }
 
         fragmentInfoBinding.fbSave.setOnClickListener {
-            viewModel.saveNews(article)
-            Snackbar.make(view,"Saved Successfully",Snackbar.LENGTH_LONG).show()
+            viewModel.saveNews(article!!)
+            Snackbar.make(view, "Saved Successfully", Snackbar.LENGTH_LONG).show()
         }
     }
 
