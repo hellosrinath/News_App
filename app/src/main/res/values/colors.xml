@@ -6,4 +6,6 @@
     <color name="list_text">@color/white</color>
     <color name="list_background">#2F2C2A</color>
     <color name="layout_background">@color/black</color>
+
+    <color name="search_background">#414243</color>
 </resources>

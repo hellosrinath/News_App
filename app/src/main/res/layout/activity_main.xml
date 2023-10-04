@@ -22,6 +22,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@color/search_background"
+        app:itemIconTint="@color/list_text"
+        app:itemTextColor="@color/list_text"
         app:menu="@menu/menu" />
 
 </LinearLayout>
