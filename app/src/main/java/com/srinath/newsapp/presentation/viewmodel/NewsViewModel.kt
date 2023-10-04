@@ -11,9 +11,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.srinath.newsapp.data.model.ApiResponse
+import com.srinath.newsapp.data.model.Article
 import com.srinath.newsapp.data.util.Resource
+import com.srinath.newsapp.domain.usecase.DeleteSavedNewsUseCase
 import com.srinath.newsapp.domain.usecase.GetNewsHeadlineUseCase
+import com.srinath.newsapp.domain.usecase.GetSavedNewsUseCase
 import com.srinath.newsapp.domain.usecase.GetSearchedNewsUseCase
+import com.srinath.newsapp.domain.usecase.SaveNewsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -21,7 +25,8 @@ import kotlinx.coroutines.launch
 class NewsViewModel(
     private val app: Application,
     private val getNewsHeadlineUseCase: GetNewsHeadlineUseCase,
-    private val getSearchedNewsUseCase: GetSearchedNewsUseCase
+    private val getSearchedNewsUseCase: GetSearchedNewsUseCase,
+    private val savedNewsUseCase: SaveNewsUseCase
 ) : AndroidViewModel(app) {
 
     val newsHeadLines: MutableLiveData<Resource<ApiResponse>> = MutableLiveData()
@@ -77,6 +82,11 @@ class NewsViewModel(
         } catch (e: Exception) {
             searchNews.postValue(Resource.Error(e.message.toString()))
         }
+    }
+
+    // save news
+    fun saveNews(article: Article)= viewModelScope.launch(Dispatchers.IO) {
+        savedNewsUseCase.execute(article)
     }
 
 }

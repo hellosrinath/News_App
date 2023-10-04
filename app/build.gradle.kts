@@ -47,6 +47,12 @@ android {
 }
 
 dependencies {
+    val room_version = "2.5.2"
+
+    // rooom
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -66,7 +72,8 @@ dependencies {
     // lifecycle
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    kapt("androidx.lifecycle:lifecycle-compiler:2.6.2")
+/*    kapt("androidx.lifecycle:lifecycle-compiler:2.6.2")*/
+    implementation("androidx.lifecycle:lifecycle-common-java8:2.6.2")
 
     // navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.3")
