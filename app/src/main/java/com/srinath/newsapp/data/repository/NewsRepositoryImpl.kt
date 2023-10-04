@@ -12,7 +12,7 @@ class NewsRepositoryImpl(
     private val newsRemoteDataSource: NewsRemoteDataSource
 ) : NewsRepository {
     override suspend fun getNewsHeadLines(country: String, page: Int): Resource<ApiResponse> {
-        return responseToResource(newsRemoteDataSource.getTopHeadLines(country,page))
+        return responseToResource(newsRemoteDataSource.getTopHeadLines(country, page))
     }
 
     private fun responseToResource(response: Response<ApiResponse>): Resource<ApiResponse> {
@@ -24,9 +24,13 @@ class NewsRepositoryImpl(
         return Resource.Error(response.message())
     }
 
-    override suspend fun getSearchedNews(searchQuery: String): Resource<ApiResponse> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getSearchedNews(
+        country: String,
+        searchQuery: String,
+        page: Int
+    ): Resource<ApiResponse> = responseToResource(
+        newsRemoteDataSource.getSearchedNews(country, searchQuery, page)
+    )
 
     override suspend fun saveNews(article: Article) {
         TODO("Not yet implemented")

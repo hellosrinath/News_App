@@ -5,4 +5,6 @@ import retrofit2.Response
 
 interface NewsRemoteDataSource {
     suspend fun getTopHeadLines(country: String, page: Int): Response<ApiResponse>
+    suspend fun getSearchedNews(country: String, searchQuery: String, page: Int):
+            Response<ApiResponse>
 }

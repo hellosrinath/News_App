@@ -40,14 +40,18 @@ class NewsFragment : Fragment() {
         viewModel = (activity as MainActivity).viewModel
         newsAdapter = (activity as MainActivity).newsAdapter
         newsAdapter.setOnItemClickListener {
-            // navigate info fragment with article
-            val bundle = Bundle().apply {
-                putSerializable("selected_article", it)
+            try {
+                // navigate info fragment with article
+                val bundle = Bundle().apply {
+                    putSerializable("selected_article", it)
+                }
+                findNavController().navigate(
+                    R.id.action_newsFragment_to_infoFragment,
+                    bundle
+                )
+            } catch (e: Exception) {
+                Log.d(TAG, "onViewCreated: ${e.message.toString()}")
             }
-            findNavController().navigate(
-                R.id.action_newsFragment_to_infoFragment,
-                bundle
-            )
         }
         initRecyclerView()
     }
