@@ -10,6 +10,7 @@ import android.transition.ArcMotion
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.srinath.newsapp.data.model.ApiResponse
 import com.srinath.newsapp.data.model.Article
@@ -20,6 +21,7 @@ import com.srinath.newsapp.domain.usecase.GetSavedNewsUseCase
 import com.srinath.newsapp.domain.usecase.GetSearchedNewsUseCase
 import com.srinath.newsapp.domain.usecase.SaveNewsUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
@@ -27,7 +29,9 @@ class NewsViewModel(
     private val app: Application,
     private val getNewsHeadlineUseCase: GetNewsHeadlineUseCase,
     private val getSearchedNewsUseCase: GetSearchedNewsUseCase,
-    private val savedNewsUseCase: SaveNewsUseCase
+    private val savedNewsUseCase: SaveNewsUseCase,
+    private val getSavedNewsUseCase: GetSavedNewsUseCase,
+    private val deleteSavedNewsUseCase: DeleteSavedNewsUseCase
 ) : AndroidViewModel(app) {
 
     var selectedArticle: Article?=null
@@ -91,5 +95,16 @@ class NewsViewModel(
         savedNewsUseCase.execute(article)
     }
 
+    // get saved news
+    fun getSavedNews() = liveData {
+        getSavedNewsUseCase.execute().collect{
+            emit(it)
+        }
+    }
+
+    // delete article
+    fun deleteArticle(article: Article) = viewModelScope.launch {
+        deleteSavedNewsUseCase.execute(article)
+    }
 
 }
