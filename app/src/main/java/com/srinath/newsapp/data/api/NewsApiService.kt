@@ -4,9 +4,9 @@ import com.srinath.newsapp.data.model.ApiResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
-//https://gitlab.com/srinath.cox/my-file/-/raw/master/news.json
+
 interface NewsApiService {
-    @GET(/*"v2/top-headlines"*/"my-file/-/raw/master/news.json")
+    @GET("v2/top-headlines")
     suspend fun getTopHeadLines(
         @Query("country")
         country: String,
