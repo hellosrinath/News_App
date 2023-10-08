@@ -16,7 +16,7 @@ interface NewsApiService {
         apiKey: String = "4bf238712d1c4195b1a078788ecc0a77"
     ): Response<ApiResponse>
 
-    @GET("v2/top-headlines")
+    @GET(/*"v2/top-headlines"*/"my-file/-/raw/master/news.json")
     suspend fun getSearchTopHeadLines(
         @Query("country")
         country: String,

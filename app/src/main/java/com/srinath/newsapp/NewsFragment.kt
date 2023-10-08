@@ -46,13 +46,8 @@ class NewsFragment : Fragment() {
         newsAdapter.setOnItemClickListener {
             try {
                 viewModel.selectedArticle = it
-                // navigate info fragment with article
-//                val bundle = Bundle().apply {
-//                    putSerializable("selected_article", it)
-//                }
                 findNavController().navigate(
                     R.id.action_newsFragment_to_infoFragment,
-                    /* bundle*/
                 )
             } catch (e: Exception) {
                 Log.d(TAG, "onViewCreated: ${e.message.toString()}")
@@ -191,35 +186,38 @@ class NewsFragment : Fragment() {
     }
 
     fun viewSearchedNews() {
-        viewModel.searchNews.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is Resource.Loading -> {
-                    showProgressBar()
-                }
-
-                is Resource.Success -> {
-                    Log.d(TAG, "viewNewsList: ${response.data}")
-                    hideProgressBar()
-                    response.data?.let {
-                        newsAdapter.differ.submitList(it.articles.toList())
-                        // page count and finding last page
-                        pages = if (it.totalResults % 20 == 0) {
-                            it.totalResults / 20
-                        } else {
-                            it.totalResults / 20 + 1
-                        }
-                        isLastPage = page == pages
+        try {
+            viewModel.searchNews.observe(viewLifecycleOwner) { response ->
+                when (response) {
+                    is Resource.Loading -> {
+                        showProgressBar()
                     }
-                }
 
-                is Resource.Error -> {
-                    Log.d(TAG, "viewNewsList: ${response.message}")
-                    hideProgressBar()
-                    response.message?.let {
-                        Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
+                    is Resource.Success -> {
+                        Log.d(TAG, "viewNewsList: ${response.data}")
+                        hideProgressBar()
+                        response.data?.let {
+                            newsAdapter.differ.submitList(it.articles.toList())
+                            // page count and finding last page
+                            pages = if (it.totalResults % 20 == 0) {
+                                it.totalResults / 20
+                            } else {
+                                it.totalResults / 20 + 1
+                            }
+                            isLastPage = page == pages
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        Log.d(TAG, "viewNewsList: ${response.message}")
+                        hideProgressBar()
+                        response.message?.let {
+                            Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
-        }
+        }catch (e: Exception){e.message.toString()}
+
     }
 }

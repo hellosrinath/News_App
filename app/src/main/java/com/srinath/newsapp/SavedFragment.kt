@@ -1,11 +1,13 @@
 package com.srinath.newsapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Adapter
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +16,7 @@ import com.srinath.newsapp.databinding.FragmentSavedBinding
 import com.srinath.newsapp.presentation.adapter.NewsAdapter
 import com.srinath.newsapp.presentation.viewmodel.NewsViewModel
 
+private const val TAG = "SavedFragment"
 class SavedFragment : Fragment() {
 
     private lateinit var fragmentSavedBinding: FragmentSavedBinding
@@ -26,6 +29,17 @@ class SavedFragment : Fragment() {
 
         viewModel = (activity as MainActivity).viewModel
         newsAdapter = (activity as MainActivity).newsAdapter
+
+        newsAdapter.setOnItemClickListener {
+            try {
+                viewModel.selectedArticle = it
+                findNavController().navigate(
+                    R.id.action_savedFragment_to_infoFragment,
+                )
+            } catch (e: Exception) {
+                Log.d(TAG, "onViewCreated: ${e.message.toString()}")
+            }
+        }
 
         initRecyclerView()
 
